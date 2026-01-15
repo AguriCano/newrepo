@@ -12,6 +12,10 @@ const app = express()
 const static = require("./routes/static")
 
 /* ***********************
+ * View Engine and Templates
+ *************************/
+
+/* ***********************
  * Routes
  *************************/
 
