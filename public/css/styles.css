@@ -1,6 +1,307 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+/* === Mobile-first base styles === */
+:root {
+  --primary-fg: rgb(115, 16, 16);
+  --primary-bg: rgb(234, 242, 247);
+  --secondary-fg: rgb(236, 229, 209);
+  --secondary-bg: rgb(0, 0, 0);
+  --pop: rgb(170, 7, 7);
+  --decorative-font: "Anta", sans-serif;
+  --body-font: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+* {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url('/images/site/checkerboard.jpg');
+  background-repeat: repeat;
+  background-size: auto;
+  background-attachment: fixed;
+}
+
+#wrapper {
+  background-color: white;
+  border: 4px solid #00b4d8;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+  border-radius: 8px;
+}
+
+/* === Header === */
+#main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 2px solid #ddd;
+}
+
+.main-header h1 {
+  font-size: 1.5rem;
+  color: #1a365d;
+}
+
+.account-link a {
+  color: #4a5568;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* === Navigation === */
+nav {
+  color: var(--secondary-fg);
+  background-color: var(--secondary-bg);
+  background-image: linear-gradient(90deg, var(--secondary-bg), rgba(255, 255, 255, 0.258), var(--secondary-bg));
+  width: 100%;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.703);
+}
+
+nav ul {
+  /* Handle this later with a burger */
+  display: flex;
+  flex-wrap: wrap;
+}
+
+nav a {
+  display: inline-block;
+  color: unset;
+  filter: brightness(1.1);
+  text-decoration: none;
+  transition: transform .5s;
+}
+
+nav a:hover {
+  transform: scale(1.1);
+  transition: transform .5s;
+}
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  justify-content: space-around;
+  list-style: none;
+  padding: .5rem 2rem .5rem 2rem;
+  gap: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+/* === Hero Section === */
+.hero {
+  margin: 1.5rem 0;
+}
+
+.hero h2 {
+  font-size: 1.3rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.car-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.delorean-img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  z-index: 1;
+}
+
+.car-info {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1rem;
+  border-radius: 8px;
+  max-width: 200px;
+  z-index: 2;
+  text-align: left;
+  margin-right: 1rem;
+}
+
+.car-info h3 {
+  color: #00b4d8;
+  font-size: 1.2rem;
+}
+
+.car-info ul {
+  list-style: none;
+  margin: 0.5rem 0;
+}
+
+.car-info ul li {
+  margin: 0.25rem 0;
+}
+
+.own-today {
+  background-color: #00b4d8;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
+
+/* === Content Wrapper (Upgrades + Reviews) === */
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+
+.upgrades-section,
+.reviews-section {
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.upgrades-section h2,
+.reviews-section h2 {
+  color: #1a365d;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.upgrades-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.upgrade-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #00b4d8;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+.upgrade-card img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 0;
+}
+
+.reviews-list li {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+/* === Footer === */
+.main-footer {
+  text-align: center;
+  padding: 1rem 0;
+  margin-top: 2rem;
+  border-top: 1px solid #ddd;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+/* === Desktop layout (≥768px) === */
+@media screen and (min-width: 768px) {
+  body {
+    padding: 1.5rem;
+  }
+
+  .main-header h1 {
+    font-size: 2rem;
+  }
+
+  .account-link a {
+    font-size: 1rem;
+  }
+
+  .main-nav ul {
+    justify-content: center;
+    overflow-x: visible;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .hero h2 {
+    font-size: 1.8rem;
+  }
+
+  .car-section {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .car-info {
+    max-width: 300px;
+  }
+
+  .car-info h3 {
+    font-size: 1.5rem;
+  }
+
+  .delorean-img {
+    max-width: 400px;
+  }
+
+  .content-wrapper {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .upgrades-section,
+  .reviews-section {
+    flex: 1;
+    min-width: 300px;
+  }
+
+  .upgrades-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .upgrade-card {
+    width: calc(50% - 1rem);
+    max-width: 250px;
+    flex: 1 1 auto;
+  }
+
+  .upgrade-card img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0.5rem;
+  }
+
+  .reviews-list li {
+    font-size: 1rem;
+  }
 }
