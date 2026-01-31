@@ -1,8 +1,8 @@
 :root {
-  --primary-fg: rgb(115, 16, 16);
+  --primary-fg: rgb(5, 0, 0);
   --primary-bg: rgb(234, 242, 247);
   --secondary-fg: rgb(236, 229, 209);
-  --secondary-bg: rgb(41, 84, 18);
+  --secondary-bg: rgb(25, 137, 230);
   --pop: rgb(170, 7, 7);
   --decorative-font: "Anta", sans-serif;
   --body-font: Verdana, Geneva, Tahoma, sans-serif;
