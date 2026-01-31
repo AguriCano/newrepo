@@ -10,7 +10,7 @@ const expressLayouts = require("express-ejs-layouts");
 // const session = require("express-session"); // ⛔ TEMPORALMENTE DESACTIVADO
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const flash = require("connect-flash");
+// const flash = require("connect-flash"); // ⛔ DESACTIVADO TEMPORALMENTE
 require("dotenv").config();
 
 /* ***********************
@@ -56,13 +56,13 @@ app.use(
  * General Middleware
  *************************/
 
-// Flash (no depende de session si no se usa activamente)
-app.use(flash());
-
-app.use((req, res, next) => {
-  res.locals.messages = require("express-messages")(req, res);
-  next();
-});
+// Flash desactivado temporalmente (requiere sesiones)
+// app.use(flash());
+//
+// app.use((req, res, next) => {
+//   res.locals.messages = require("express-messages")(req, res);
+//   next();
+// });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

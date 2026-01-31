@@ -1,5 +1,5 @@
 <h1><%- title %></h1>
-<%- messages() %>
+<% if (typeof messages === "function") { %><%- messages() %><% } %>
 <% if (errors) { %>
 <ul class="notice">
     <% errors.array().forEach(error => { %>
