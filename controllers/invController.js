@@ -105,10 +105,12 @@ invCont.addClassification = async function (req, res, next) {
       "notice",
       `The "${classification_name}" classification was successfully added.`
     );
+    const classificationSelect = await utilities.buildClassificationList();
     res.render("inventory/management", {
       title: "Vehicle Management",
       errors: null,
       nav,
+      classificationSelect,
       classification_name,
     });
   } else {
@@ -131,12 +133,14 @@ invCont.addClassification = async function (req, res, next) {
 invCont.buildAddInventory = async function (req, res, next) {
   const nav = await utilities.getNav();
   let classifications = await utilities.buildClassificationList();
+  const classificationSelect = classifications;
 
   res.render("inventory/addInventory", {
     title: "Add Vehicle",
     errors: null,
     nav,
     classifications,
+    classificationSelect,
   });
 };
 
@@ -188,12 +192,24 @@ invCont.addInventory = async function (req, res, next) {
       errors: null,
     });
   } else {
-    // This seems to never get called. Is this just for DB errors?
-    req.flash("notice", "There was a problem.");
+    // Return to form with sticky values when there's a problem
+    req.flash("notice", "There was a problem adding the vehicle.");
+    let classifications = await utilities.buildClassificationList(classification_id);
     res.render("inventory/addInventory", {
       title: "Add Vehicle",
       nav,
+      classifications,
       errors: null,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
     });
   }
 };

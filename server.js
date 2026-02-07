@@ -7,10 +7,10 @@
  *************************/
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
-// const session = require("express-session"); // ⛔ TEMPORALMENTE DESACTIVADO
+const session = require("express-session");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-// const flash = require("connect-flash"); // ⛔ DESACTIVADO TEMPORALMENTE
+const flash = require("connect-flash");
 require("dotenv").config();
 
 /* ***********************
@@ -31,11 +31,9 @@ const pool = require("./database"); // DB sigue funcionando
 const app = express();
 
 /* =====================================================
- * 🔒 SESSION DESACTIVADA TEMPORALMENTE
- * (NO express-session, NO secret, NO store)
+ * � SESSION CONFIGURATION
  * ===================================================== */
 
-/*
 const pgSession = require("connect-pg-simple")(session);
 
 app.use(
@@ -50,19 +48,17 @@ app.use(
     saveUninitialized: false,
   })
 );
-*/
 
 /* ***********************
  * General Middleware
  *************************/
 
-// Flash desactivado temporalmente (requiere sesiones)
-// app.use(flash());
-//
-// app.use((req, res, next) => {
-//   res.locals.messages = require("express-messages")(req, res);
-//   next();
-// });
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.messages = require("express-messages")(req, res);
+  next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
