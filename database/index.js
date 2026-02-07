@@ -14,25 +14,27 @@ if (process.env.NODE_ENV == "development") {
             rejectUnauthorized: false,
         },
     });
-
-    // Added for troubleshooting queries
-    // during development
-    module.exports = {
-        async query(text, params) {
-            try {
-                const res = await pool.query(text, params);
-                console.log("executed query", { text });
-                return res;
-            } catch (error) {
-                console.error("error in query", { text });
-                throw error;
-            }
-        },
-    };
 }
 else {
     pool = new Pool({
         connectionString: process.env.DATABASE_URL,
     });
-    module.exports = pool;
+}
+
+// Always export the pool itself for pgSession compatibility
+module.exports = pool;
+
+// Add a wrapper query method for debugging in development
+if (process.env.NODE_ENV == "development") {
+    const originalQuery = pool.query.bind(pool);
+    pool.query = async function(text, params) {
+        try {
+            const res = await originalQuery(text, params);
+            console.log("executed query", { text });
+            return res;
+        } catch (error) {
+            console.error("error in query", { text, error: error.message });
+            throw error;
+        }
+    };
 }

@@ -44,8 +44,8 @@ app.use(
     }),
     name: "sessionId",
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
   })
 );
 
