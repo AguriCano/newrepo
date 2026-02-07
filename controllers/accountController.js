@@ -35,7 +35,7 @@ async function registerAccount(req, res) {
   let hashedPassword;
   try {
     // regular password and cost (salt is generated automatically)
-    hashedPassword = await bcrypt.hashSync(account_password, 10);
+    hashedPassword = await bcrypt.hash(account_password, 10);
   } catch (error) {
     req.flash(
       "notice",
