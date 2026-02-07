@@ -9,7 +9,9 @@
   <% } %>
 <form class="input-box" id="loginForm" action="/account/login" method="post">
     <label>Email<input type="email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>"></label>
-    <label>Password<input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$"><span class="reveal-button active" id="passwordHide">hide password</span></label>
+    <label>Password</label>
+    <span class="fine-print">Password must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
+    <label><input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><span class="reveal-button active" id="passwordHide">hide password</span></label>
     <input type="submit" value="LOGIN">
 </form>
 <div>
