@@ -114,8 +114,13 @@ async function accountLogin(req, res) {
       return res.redirect("/account/");
     } // Need to have a wrong password option
     else {
-      req.flash("notice", "Please check your credentials and try again."); // Login was hanging with bad password but correct id
-      res.redirect("/account/");
+      req.flash("notice", "Please check your credentials and try again.");
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
     }
   } catch (error) {
     return new Error("Access Forbidden");
