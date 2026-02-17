@@ -8,10 +8,13 @@
    </ul>
   <% } %>
 <form class="input-box" id="loginForm" action="/account/login" method="post">
-    <label>Email<input type="email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>"></label>
-    <label>Password</label>
-    <span class="fine-print">Password must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span>
-    <label><input type="password" name="account_password" id="password" required autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><span class="reveal-button active" id="passwordHide">hide password</span></label>
+    <label for="account_email">Email</label>
+    <input type="email" id="account_email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>">
+    
+    <label for="password">Password</label>
+    <p class="fine-print">Password must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</p>
+    <input type="password" id="password" name="account_password" required autocomplete="current-password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+    <button type="button" id="passwordHide" class="reveal-button active" aria-pressed="true" aria-label="Show password">Show</button>
     <input type="submit" value="LOGIN">
 </form>
 <div>
@@ -24,10 +27,14 @@
         if(passwordInput.getAttribute("type") == "password" ) {
             passwordInput.setAttribute("type", "text");
             passwordHide.classList.remove("active");
+            passwordHide.setAttribute("aria-pressed", "false");
+            passwordHide.textContent = "Hide";
         }
         else {
             passwordInput.setAttribute("type", "password");
             passwordHide.classList.add("active");
-        }
+            passwordHide.setAttribute("aria-pressed", "true");
+            passwordHide.textContent = "Show";
+        }        }
     })
 </script>
