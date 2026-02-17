@@ -12,9 +12,9 @@
     <h2>Welcome <%- locals.accountData.account_firstname %></h2>
     <p><a href="/account/update/<%- locals.accountData.account_id %>">Update account information</a></p>
   <% } else if(locals.accountData.account_type == "Employee" || locals.accountData.account_type == "Admin") { %>
-    <h2>Welcome <%- locals.accountData.account_firstname %> </h2>
+    <h2>Welcome <%- locals.accountData.account_firstname %></h2>
     <p><a href="/account/update/<%- locals.accountData.account_id %>">Update account information</a></p>
-    <h2>Inventory Management</h2>
+    <h3>Inventory Management</h3>
     <p><a href="/inv/">Manage Inventory</a></p>
   <% } %>
 
@@ -25,5 +25,3 @@
       <li><p>Go to <a href="/message">inbox</a></p></li>
     </ul>
   <% } %>
-  
-  <h3>You're logged in</h3>

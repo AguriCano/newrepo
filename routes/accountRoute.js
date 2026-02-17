@@ -31,15 +31,17 @@ router.post(
 );
 
 // Update account handlers
-router.get("/update/:accountId", utilities.handleErrors(accountController.buildUpdate));
+router.get("/update/:accountId", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdate));
 router.post(
   "/update",
+  utilities.checkLogin,
   regValidate.updateRules(), // TODO: This needs to have a separate rule set, without existing email check..unless...oh complex
   regValidate.checkUpdateData,
   utilities.handleErrors(accountController.updateAccount)
   );
 router.post(
   "/update-password",
+  utilities.checkLogin,
   regValidate.updatePasswordRules(),
   regValidate.checkUpdatePasswordData,
   utilities.handleErrors(accountController.updatePassword)

@@ -250,11 +250,17 @@ async function updatePassword(req, res) {
       "notice",
       "Sorry, there was an error processing the password update."
     );
+    const accountData = await accountModel.getAccountById(account_id);
     res.status(500).render("account/update", {
       title: "Update",
       nav,
       errors: null,
+      account_id: accountData.account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
     });
+    return;
   }
 
   const regResult = await accountModel.updatePassword(account_id, hashedPassword);
@@ -271,10 +277,15 @@ async function updatePassword(req, res) {
     });
   } else {
     req.flash("notice", "Sorry, the password update failed.");
+    const accountData = await accountModel.getAccountById(account_id);
     res.status(501).render("account/update", {
       title: "Update",
       errors: null,
       nav,
+      account_id: accountData.account_id,
+      account_firstname: accountData.account_firstname,
+      account_lastname: accountData.account_lastname,
+      account_email: accountData.account_email,
     });
   }
 }

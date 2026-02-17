@@ -8,37 +8,54 @@
    </ul>
   <% } %>
 
+<h2>Account Update</h2>
 <form class="input-box" action="/account/update" method="post">
-    <label>First name<input type="text" name="account_firstname" required autocomplete="given-name" value="<%= locals.account_firstname %>"></label>
-    <label>Last name<input type="text" name="account_lastname" required autocomplete="family-name" value="<%= locals.account_lastname %>"></label>
-    <label>Email address<input type="email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>"></label>
+    <label for="account_firstname">First name</label>
+    <input type="text" id="account_firstname" name="account_firstname" required autocomplete="given-name" value="<%= locals.account_firstname %>">
+    
+    <label for="account_lastname">Last name</label>
+    <input type="text" id="account_lastname" name="account_lastname" required autocomplete="family-name" value="<%= locals.account_lastname %>">
+    
+    <label for="account_email">Email address</label>
+    <input type="email" id="account_email" name="account_email" required autocomplete="email" value="<%= locals.account_email %>">
     
     <input type="submit" value="UPDATE">
     <input type="hidden" name="account_id" value="<%= locals.account_id %>">
-    <input type="hidden" name="old_email" value="<%= locals.account_email %>"> <%# To exclude from existing email search %>
+    <input type="hidden" name="old_email" value="<%= locals.account_email %>">
 </form>
 
+<h2>Change Password</h2>
 <form class="input-box" action="/account/update-password" method="post">
-    <label>Password<input type="password" name="account_password" id="password" required autocomplete="new-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$"><span class="reveal-button active" id="passwordHide">hide password</span></label>
-    <span class="fine-print">Password must be 12 characters or longer, contain 1 capital letter, 1 number and 1 special character. This will change your current password.</span>
+    <label for="password">New Password</label>
+    <input type="password" id="password" name="account_password" required autocomplete="new-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$">
+    <button type="button" id="passwordHide" class="reveal-button active" aria-pressed="true" aria-label="Show password">Show</button>
+    
+    <p class="fine-print">Password must be 12 characters or longer, contain 1 capital letter, 1 number and 1 special character. This will change your current password.</p>
+    
     <input type="submit" value="CHANGE PASSWORD">
     <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+    <input type="hidden" name="account_firstname" value="<%= locals.account_firstname %>">
+    <input type="hidden" name="account_lastname" value="<%= locals.account_lastname %>">
+    <input type="hidden" name="account_email" value="<%= locals.account_email %>">
 </form>
-
-
 
 <!-- Script to handle hiding and revealing password field -->
 <script>
     const passwordInput = document.querySelector("#password");
     const passwordHide = document.querySelector("#passwordHide");
+    
     passwordHide.addEventListener("click", () => {
         if(passwordInput.getAttribute("type") == "password" ) {
             passwordInput.setAttribute("type", "text");
             passwordHide.classList.remove("active");
+            passwordHide.setAttribute("aria-pressed", "false");
+            passwordHide.textContent = "Hide";
         }
         else {
             passwordInput.setAttribute("type", "password");
             passwordHide.classList.add("active");
+            passwordHide.setAttribute("aria-pressed", "true");
+            passwordHide.textContent = "Show";
         }
     })
 </script>

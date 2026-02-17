@@ -42,7 +42,7 @@ validate.registrationRules = () => {
 };
 
 /* **********************************
- *  Registration Data Validation Rules
+ *  Update Account Data Validation Rules
  * ********************************* */
 validate.updateRules = () => {
   return [
@@ -52,7 +52,7 @@ validate.updateRules = () => {
       .escape()
       .notEmpty()
       .isLength({ min: 1 })
-      .withMessage("Please provide a first name."), // on error this message is sent.
+      .withMessage("Please provide a first name."),
 
     // lastname is required and must be string
     body("account_lastname")
@@ -60,16 +60,15 @@ validate.updateRules = () => {
       .escape()
       .notEmpty()
       .isLength({ min: 2 })
-      .withMessage("Please provide a last name."), // on error this message is sent.
+      .withMessage("Please provide a last name."),
 
     // valid email is required and cannot already exist in the database
     body("account_email")
       .trim()
       .isEmail()
-      .normalizeEmail() // refer to validator.js docs
+      .normalizeEmail()
       .withMessage("A valid email is required.")
-      .custom(async (account_email, { req }) => { // Magic
-        console.dir(req.body);
+      .custom(async (account_email, { req }) => {
         const emailExists = await accountModel.checkExistingEmail(
           account_email, req.body.old_email
         );
@@ -162,7 +161,7 @@ validate.checkUpdateData = async (req, res, next) => {
   errors = validationResult(req);
   if (!errors.isEmpty()) {
       let nav = await utilities.getNav();
-      res.render("account/update/", {
+      res.render("account/update", {
           errors,
           title: "Update",
           nav,
