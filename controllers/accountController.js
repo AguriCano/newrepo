@@ -205,17 +205,17 @@ async function updateAccount(req, res) {
     );
 
     //Update the cookie accountData
-    // TODO: Better way to do this?
-
     const accountData = await accountModel.getAccountById(account_id); // Get it from db so we can remake the cookie
     delete accountData.account_password;
-    res.locals.accountData.account_firstname = accountData.account_firstname; // So it displays correctly
+    res.locals.accountData = accountData; // Update res.locals with new data
     utilities.updateCookie(accountData, res); // Remake the cookie with new data
 
+    const unread = await messageModel.getMessageCountById(account_id);
     res.status(201).render("account/account-management", {
-      title: "Management",
+      title: "Account Management",
       errors: null,
       nav,
+      unread,
     });
   } else {
     req.flash("notice", "Sorry, the update failed.");
@@ -270,10 +270,12 @@ async function updatePassword(req, res) {
       "notice",
       `Congratulations, you've updated the password.`
     );
+    const unread = await messageModel.getMessageCountById(account_id);
     res.status(201).render("account/account-management", {
-      title: "Manage",
+      title: "Account Management",
       errors: null,
       nav,
+      unread,
     });
   } else {
     req.flash("notice", "Sorry, the password update failed.");
