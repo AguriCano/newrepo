@@ -307,4 +307,34 @@ Util.buildRecipientList = (recipientData, preselected = null) => {
   return list;
 
 };
+
+/**
+ * Build an HTML string of reviews from the reviews array
+ * @param {Array} reviews
+ * @returns {string} HTML table of reviews
+ */
+Util.buildReviewsTable = (reviews) => {
+  if (!reviews || reviews.length === 0) {
+    return '<p class="no-reviews">No reviews yet. Be the first to review this vehicle!</p>';
+  }
+
+  let reviewsList = '<div class="reviews-list">';
+  reviews.forEach((review) => {
+    const stars = "★".repeat(review.review_rating) + "☆".repeat(5 - review.review_rating);
+    reviewsList += `
+    <div class="review-item">
+      <div class="review-header">
+        <div class="review-author">${review.account_firstname} ${review.account_lastname}</div>
+        <div class="review-rating">${stars} (${review.review_rating} of 5)</div>
+      </div>
+      <div class="review-date">${new Date(review.review_created).toLocaleDateString()}</div>
+      <div class="review-title">${review.review_title}</div>
+      <div class="review-body">${review.review_body}</div>
+    </div>`;
+  });
+  reviewsList += '</div>';
+
+  return reviewsList;
+};
+
 module.exports = Util;

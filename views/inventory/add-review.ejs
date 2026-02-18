@@ -1,0 +1,124 @@
+<h1><%- title %></h1>
+
+<% if (typeof messages === "function") { %><%- messages() %><% } %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error => { %>
+            <li><%= error.msg %></li>
+        <%  }) %>
+    </ul>
+<% } %>
+
+<div class="vehicle-info">
+    <h2><%= inventory.inv_year %> <%= inventory.inv_make %> <%= inventory.inv_model %></h2>
+</div>
+
+<form class="input-box" action="/inv/add-review/<%= inventory.inv_id %>" method="post">
+    <label>Rating
+        <select name="review_rating" required>
+            <option value="">-- Select a Rating --</option>
+            <option value="5" <% if (review_rating === '5') { %>selected<% } %>>5 Stars ★★★★★</option>
+            <option value="4" <% if (review_rating === '4') { %>selected<% } %>>4 Stars ★★★★</option>
+            <option value="3" <% if (review_rating === '3') { %>selected<% } %>>3 Stars ★★★</option>
+            <option value="2" <% if (review_rating === '2') { %>selected<% } %>>2 Stars ★★</option>
+            <option value="1" <% if (review_rating === '1') { %>selected<% } %>>1 Star ★</option>
+        </select>
+        <span class="fine-print">Required.</span>
+    </label>
+
+    <label>Review Title
+        <input type="text" 
+               value="<%- locals.review_title || '' %>" 
+               placeholder="Great vehicle!" 
+               name="review_title" 
+               minlength="3" 
+               maxlength="100" 
+               required>
+        <span class="fine-print">Required. 3-100 characters.</span>
+    </label>
+
+    <label>Your Review
+        <textarea placeholder="Tell us about your experience with this vehicle..." 
+                  name="review_body" 
+                  minlength="10" 
+                  maxlength="5000" 
+                  rows="8" 
+                  required><%- locals.review_body || '' %></textarea>
+        <span class="fine-print">Required. 10-5000 characters.</span>
+    </label>
+
+    <input type="submit" value="Submit Review">
+</form>
+
+<style>
+    .input-box {
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        max-width: 600px;
+    }
+
+    .input-box label {
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .input-box input,
+    .input-box select,
+    .input-box textarea {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        font-family: inherit;
+        font-size: 14px;
+    }
+
+    .input-box textarea {
+        resize: vertical;
+    }
+
+    .fine-print {
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-top: 5px;
+    }
+
+    input[type="submit"] {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        padding: 12px 30px;
+        margin-top: 10px;
+    }
+
+    input[type="submit"]:hover {
+        background: #0056b3;
+    }
+
+    .vehicle-info {
+        background: #f5f5f5;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .notice {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+        padding: 12px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .notice li {
+        margin: 5px 0;
+    }
+</style>

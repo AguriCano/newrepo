@@ -2,8 +2,10 @@
 const express = require("express");
 const router = new express.Router() ;
 const invController = require("../controllers/invController");
+const reviewController = require("../controllers/reviewController");
 const utilities = require("../utilities");
 const invValidate = require("../utilities/inventory-validation");
+const reviewValidate = require("../utilities/review-validation");
 
 
 // Route middleware for management functionality //TODO: Disable management screen
@@ -31,6 +33,14 @@ router.post("/update/", invValidate.inventoryRules(), invValidate.checkUpdateDat
 // Delete vehicle information routes
 router.get("/delete/:inventoryId", utilities.handleErrors(invController.buildDeleteInventory));
 router.post("/delete/", utilities.handleErrors(invController.deleteInventory));  // Don't need validation
+
+// Review routes (ADDITIONAL ENHANCEMENT)
+router.get("/reviews/:invId", utilities.handleErrors(reviewController.buildReviewView));
+router.get("/add-review/:invId", utilities.checkLogin, utilities.handleErrors(reviewController.buildAddReviewForm));
+router.post("/add-review/:invId", utilities.checkLogin, reviewValidate.reviewRules(), reviewValidate.checkReviewData, utilities.handleErrors(reviewController.addReview));
+router.get("/edit-review/:reviewId", utilities.checkLogin, utilities.handleErrors(reviewController.buildEditReviewForm));
+router.post("/edit-review/:reviewId", utilities.checkLogin, reviewValidate.reviewRules(), reviewValidate.checkReviewData, utilities.handleErrors(reviewController.updateReview));
+router.post("/delete-review/:reviewId", utilities.checkLogin, utilities.handleErrors(reviewController.deleteReview));
 
 // AJAX inventory api call route
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
