@@ -86,6 +86,9 @@ async function buildAddReviewForm(req, res, next) {
       title: `Add Review - ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}`,
       nav,
       inventory: invData,
+      review_rating: "",
+      review_title: "",
+      review_body: "",
       errors: null,
     });
   } catch (error) {
@@ -115,6 +118,9 @@ async function addReview(req, res, next) {
         title: `Add Review - ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}`,
         nav,
         inventory: invData,
+        review_rating: review_rating,
+        review_title: review_title,
+        review_body: review_body,
         errors: errors.array(),
       });
     }
@@ -187,6 +193,9 @@ async function buildEditReviewForm(req, res, next) {
       nav,
       review,
       inventory,
+      review_rating: review.review_rating.toString(),
+      review_title: review.review_title,
+      review_body: review.review_body,
       errors: null,
     });
   } catch (error) {
@@ -216,12 +225,16 @@ async function updateReview(req, res, next) {
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      const inventory = (await inventoryModel.getInventoryByInventoryId(review.review_inv_id))[0];
       let nav = await utilities.getNav();
       return res.render("inventory/edit-review", {
         title: `Edit Review`,
         nav,
         review,
-        inventory: await inventoryModel.getInventoryById(review.review_inv_id),
+        inventory,
+        review_rating: review_rating,
+        review_title: review_title,
+        review_body: review_body,
         errors: errors.array(),
       });
     }
