@@ -77,7 +77,7 @@ async function buildAddReviewForm(req, res, next) {
         "notice",
         "You have already reviewed this vehicle. You can only leave one review per vehicle."
       );
-      return res.redirect(`/inventory/reviews/${invId}`);
+      return res.redirect(`/inv/reviews/${invId}`);
     }
 
     let nav = await utilities.getNav();
@@ -132,7 +132,7 @@ async function addReview(req, res, next) {
         "notice",
         "You have already reviewed this vehicle. You can only leave one review per vehicle."
       );
-      return res.redirect(`/inventory/reviews/${invId}`);
+      return res.redirect(`/inv/reviews/${invId}`);
     }
 
     // Insert review into database
@@ -147,7 +147,7 @@ async function addReview(req, res, next) {
 
     if (newReview) {
       req.flash("success", "Your review has been posted successfully!");
-      res.redirect(`/inventory/reviews/${invId}`);
+      res.redirect(`/inv/reviews/${invId}`);
     } else {
       throw new Error("Failed to insert review");
     }
@@ -157,7 +157,7 @@ async function addReview(req, res, next) {
       "notice",
       "An error occurred while posting your review. Please try again."
     );
-    res.redirect(`/inventory/reviews/${req.params.invId}`);
+    res.redirect(`/inv/reviews/${req.params.invId}`);
   }
 }
 
@@ -180,7 +180,7 @@ async function buildEditReviewForm(req, res, next) {
     // Check authorization - only review author can edit
     if (review.review_account_id !== res.locals.accountData.account_id) {
       req.flash("notice", "You are not authorized to edit this review.");
-      return res.redirect(`/inventory/reviews/${review.review_inv_id}`);
+      return res.redirect(`/inv/reviews/${review.review_inv_id}`);
     }
 
     const inventory = (await inventoryModel.getInventoryByInventoryId(
@@ -248,7 +248,7 @@ async function updateReview(req, res, next) {
 
     if (updatedReview) {
       req.flash("success", "Your review has been updated successfully!");
-      res.redirect(`/inventory/reviews/${review.review_inv_id}`);
+      res.redirect(`/inv/reviews/${review.review_inv_id}`);
     }
   } catch (error) {
     console.error("Error updating review:", error);
@@ -282,14 +282,14 @@ async function deleteReview(req, res, next) {
       res.locals.accountData.account_type !== "Admin"
     ) {
       req.flash("notice", "You are not authorized to delete this review.");
-      return res.redirect(`/inventory/reviews/${review.review_inv_id}`);
+      return res.redirect(`/inv/reviews/${review.review_inv_id}`);
     }
 
     const deletedReview = await reviewModel.deleteReview(reviewId);
 
     if (deletedReview) {
       req.flash("success", "Your review has been deleted successfully!");
-      res.redirect(`/inventory/reviews/${review.review_inv_id}`);
+      res.redirect(`/inv/reviews/${review.review_inv_id}`);
     }
   } catch (error) {
     console.error("Error deleting review:", error);
