@@ -50,9 +50,9 @@ validate.checkReviewData = async (req, res, next) => {
       const reviewModel = require("../models/review-model");
       const inventoryModel = require("../models/inventory-model");
       const review = await reviewModel.getReviewById(req.params.reviewId);
-      const inventory = await inventoryModel.getInventoryById(
+      const inventory = (await inventoryModel.getInventoryByInventoryId(
         review.review_inv_id
-      );
+      ))[0];
       let nav = await utilities.getNav();
       return res.render("inventory/edit-review", {
         errors,
@@ -67,9 +67,9 @@ validate.checkReviewData = async (req, res, next) => {
     } else {
       // If adding new review
       const inventoryModel = require("../models/inventory-model");
-      const invData = await inventoryModel.getInventoryById(
+      const invData = (await inventoryModel.getInventoryByInventoryId(
         req.params.invId
-      );
+      ))[0];
       let nav = await utilities.getNav();
       return res.render("inventory/add-review", {
         errors,

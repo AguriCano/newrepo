@@ -51,6 +51,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
     nav,
     listing,
     inventory: data[0],
+    loggedin: res.locals.loggedin,
   });
 };
 

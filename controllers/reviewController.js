@@ -14,7 +14,7 @@ async function buildReviewView(req, res, next) {
     const invId = req.params.invId;
     
     // Validate inventory exists
-    const invData = await inventoryModel.getInventoryById(invId);
+    const invData = (await inventoryModel.getInventoryByInventoryId(invId))[0];
     if (!invData) {
       return res.status(404).render("errors/error", {
         title: "404 - Vehicle Not Found",
@@ -58,7 +58,7 @@ async function buildAddReviewForm(req, res, next) {
     const invId = req.params.invId;
 
     // Validate inventory exists
-    const invData = await inventoryModel.getInventoryById(invId);
+    const invData = (await inventoryModel.getInventoryByInventoryId(invId))[0];
     if (!invData) {
       return res.status(404).render("errors/error", {
         title: "404 - Vehicle Not Found",
@@ -109,7 +109,7 @@ async function addReview(req, res, next) {
     // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const invData = await inventoryModel.getInventoryById(invId);
+      const invData = (await inventoryModel.getInventoryByInventoryId(invId))[0];
       let nav = await utilities.getNav();
       return res.render("inventory/add-review", {
         title: `Add Review - ${invData.inv_year} ${invData.inv_make} ${invData.inv_model}`,
@@ -177,9 +177,9 @@ async function buildEditReviewForm(req, res, next) {
       return res.redirect(`/inventory/reviews/${review.review_inv_id}`);
     }
 
-    const inventory = await inventoryModel.getInventoryById(
+    const inventory = (await inventoryModel.getInventoryByInventoryId(
       review.review_inv_id
-    );
+    ))[0];
     let nav = await utilities.getNav();
 
     res.render("inventory/edit-review", {
