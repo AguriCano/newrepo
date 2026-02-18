@@ -2,28 +2,25 @@
 
 <% if (typeof messages === "function") { %><%- messages() %><% } %>
 
-<div class="vehicle-info">
+<div style="background: #f5f5f5; padding: 20px; margin-bottom: 20px;">
     <h2><%= inventory.inv_year %> <%= inventory.inv_make %> <%= inventory.inv_model %></h2>
+    <p><strong>Average Rating:</strong> <%= rating.average_rating %> / 5 stars (<%= rating.review_count %> reviews)</p>
     
-    <p><strong>Average Rating:</strong> <%= rating.average_rating %> / 5.0 (<%= rating.review_count %> reviews)</p>
-
     <% if (loggedin) { %>
         <% if (!hasReviewed) { %>
-            <p><a href="/inv/add-review/<%= inventory.inv_id %>" style="background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Write a Review</a></p>
+            <a href="/inv/add-review/<%= inventory.inv_id %>" style="background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-top: 10px;">Write a Review</a>
         <% } else { %>
-            <p style="background: #fff3cd; padding: 10px; border-radius: 5px;">You have already reviewed this vehicle.</p>
+            <p style="margin-top: 10px; color: #666;">You have already reviewed this vehicle.</p>
         <% } %>
     <% } else { %>
-        <p style="background: #fff3cd; padding: 10px; border-radius: 5px;"><a href="/account/login">Log in</a> to write a review.</p>
+        <p style="margin-top: 10px;"><a href="/account/login">Log in</a> to write a review.</p>
     <% } %>
 </div>
 
-<div class="reviews-container">
-    <h3>Customer Reviews</h3>
-    
-    <% if (reviews && reviews.length > 0) { %>
-        <%- reviews %>
-    <% } else { %>
-        <p>No reviews yet. Be the first to review this vehicle!</p>
-    <% } %>
-</div>
+<h3>Customer Reviews</h3>
+
+<% if (reviews && reviews.length > 0) { %>
+    <%- reviews %>
+<% } else { %>
+    <p>No reviews yet. Be the first to review this vehicle!</p>
+<% } %>
