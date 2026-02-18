@@ -7,3 +7,14 @@
 <%# messages() %>
 
 <%- listing %>
+
+<div style="margin-top: 30px; padding: 20px; background: #f9f9f9; border-radius: 5px;">
+    <h3>Customer Reviews</h3>
+    <a href="/inv/reviews/<%= inventory.inv_id %>" style="background: #007bff; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block; margin-right: 10px;">View All Reviews</a>
+    
+    <% if (loggedin) { %>
+        <a href="/inv/add-review/<%= inventory.inv_id %>" style="background: #28a745; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; display: inline-block;">Write a Review</a>
+    <% } else { %>
+        <p style="margin-top: 15px; color: #666;"><a href="/account/login">Log in</a> to write a review.</p>
+    <% } %>
+</div>

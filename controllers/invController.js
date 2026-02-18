@@ -50,6 +50,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
     title: itemName,
     nav,
     listing,
+    inventory: data[0],
   });
 };
 
