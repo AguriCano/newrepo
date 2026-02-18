@@ -16,6 +16,16 @@ router.use(["/add-classification", "/add-inventory", "/edit/:inventoryId", "/upd
 // Route to build inventory by classification view
 router.get("/", utilities.checkAuthorizationManager, utilities.handleErrors(invController.buildManagementView)); // Only for Employee/Admin
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
+
+// Review routes (ADDITIONAL ENHANCEMENT) - MUST BE BEFORE /detail/:inventoryId
+router.get("/reviews/:invId", utilities.handleErrors(reviewController.buildReviewView));
+router.get("/add-review/:invId", utilities.checkLogin, utilities.handleErrors(reviewController.buildAddReviewForm));
+router.post("/add-review/:invId", utilities.checkLogin, reviewValidate.reviewRules(), reviewValidate.checkReviewData, utilities.handleErrors(reviewController.addReview));
+router.get("/edit-review/:reviewId", utilities.checkLogin, utilities.handleErrors(reviewController.buildEditReviewForm));
+router.post("/edit-review/:reviewId", utilities.checkLogin, reviewValidate.reviewRules(), reviewValidate.checkReviewData, utilities.handleErrors(reviewController.updateReview));
+router.post("/delete-review/:reviewId", utilities.checkLogin, utilities.handleErrors(reviewController.deleteReview));
+
+// Vehicle detail (generic param) - MUST BE AFTER specific routes
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
 
 // Classification management routes
@@ -33,14 +43,6 @@ router.post("/update/", invValidate.inventoryRules(), invValidate.checkUpdateDat
 // Delete vehicle information routes
 router.get("/delete/:inventoryId", utilities.handleErrors(invController.buildDeleteInventory));
 router.post("/delete/", utilities.handleErrors(invController.deleteInventory));  // Don't need validation
-
-// Review routes (ADDITIONAL ENHANCEMENT)
-router.get("/reviews/:invId", utilities.handleErrors(reviewController.buildReviewView));
-router.get("/add-review/:invId", utilities.checkLogin, utilities.handleErrors(reviewController.buildAddReviewForm));
-router.post("/add-review/:invId", utilities.checkLogin, reviewValidate.reviewRules(), reviewValidate.checkReviewData, utilities.handleErrors(reviewController.addReview));
-router.get("/edit-review/:reviewId", utilities.checkLogin, utilities.handleErrors(reviewController.buildEditReviewForm));
-router.post("/edit-review/:reviewId", utilities.checkLogin, reviewValidate.reviewRules(), reviewValidate.checkReviewData, utilities.handleErrors(reviewController.updateReview));
-router.post("/delete-review/:reviewId", utilities.checkLogin, utilities.handleErrors(reviewController.deleteReview));
 
 // AJAX inventory api call route
 router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
