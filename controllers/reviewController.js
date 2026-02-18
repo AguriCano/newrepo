@@ -38,6 +38,7 @@ async function buildReviewView(req, res, next) {
       reviews: reviewsTable,
       rating: ratingData,
       hasReviewed,
+      loggedin: res.locals.loggedin,
       errors: null,
     });
   } catch (error) {
